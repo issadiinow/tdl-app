@@ -1,3 +1,4 @@
+/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -75,45 +76,159 @@ body::before {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Create Form Container - Always Visible in V1 */
-.create-form-container {
+/* Todo Grid */
+.todo-grid {
     display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
     justify-content: center;
-    margin-bottom: 3rem;
 }
 
-.create-form {
+/* Todo Card */
+.todo-card {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    color: white;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    flex: 0 1 300px;
+    min-width: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 200px;
+}
+
+.todo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.todo-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.todo-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.todo-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    position: relative;
+    z-index: 2;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    padding: 3rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    margin: 2rem 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
     background: white;
     border-radius: 15px;
     padding: 2rem;
     max-width: 500px;
-    width: 100%;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    animation: fadeIn 0.5s ease;
+    width: 90%;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes fadeIn {
+@keyframes modalSlideIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(-50px) scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
-.create-form h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 2rem;
-    text-align: center;
     border-bottom: 1px solid #eee;
     padding-bottom: 1rem;
 }
 
-.form-body label {
+.modal-header h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #333;
+    background: #f5f5f5;
+}
+
+.modal-body label {
     display: block;
     font-weight: bold;
     margin-bottom: 1rem;
@@ -121,7 +236,7 @@ body::before {
     font-size: 1.1rem;
 }
 
-.form-body input {
+.modal-body input {
     width: 100%;
     padding: 1rem;
     border: 2px solid #eee;
@@ -132,14 +247,14 @@ body::before {
     transition: all 0.3s ease;
 }
 
-.form-body input:focus {
+.modal-body input:focus {
     outline: none;
     border-color: #6366f1;
     background: white;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
-.form-actions {
+.modal-actions {
     display: flex;
     gap: 1rem;
     justify-content: flex-end;
@@ -180,54 +295,29 @@ body::before {
     box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
-/* Todo Grid - Basic styling for V1 */
-.todo-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    justify-content: center;
-}
-
-/* Basic Todo Card for V1 */
-.todo-card {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-    border-radius: 15px;
-    padding: 2rem;
+/* Success Message */
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #10b981;
     color: white;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
-    flex: 0 1 300px;
-    min-width: 280px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    z-index: 1001;
+    animation: slideInRight 0.3s ease;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
-.todo-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
-}
-
-.todo-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-    pointer-events: none;
-}
-
-.todo-card h3 {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-    position: relative;
-    z-index: 2;
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* Responsive Design */
@@ -251,11 +341,11 @@ body::before {
         max-width: 400px;
     }
     
-    .form-actions {
+    .modal-actions {
         flex-direction: column;
     }
     
-    .create-form {
+    .modal {
         width: 95%;
         margin: 1rem;
     }
@@ -266,4 +356,11 @@ body::before {
         padding: 0.75rem 1.5rem;
         font-size: 0.9rem;
     }
+    
+    .todo-card {
+        min-height: 150px;
+    }
 }
+
+
+
