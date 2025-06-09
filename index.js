@@ -5,28 +5,43 @@ class TodoApp {
     }
 
     init() {
-        console.log('Todo App V1 Initialized - Basic Layout and Form');
+        console.log('Todo App V2 Initialized - Modal Implementation');
         this.bindEvents();
         this.render();
     }
 
     generateId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        return Date.now().toString(36) + Math.random().toString(36).substring(2);
     }
 
     // Event Binding
     bindEvents() {
-        // Save button event
+        // Show modal on create button click
+        document.getElementById('createNewBtn').addEventListener('click', () => {
+            this.showCreateModal();
+        });
+
+        // Close modal buttons
+        document.getElementById('closeModal').addEventListener('click', () => {
+            this.hideCreateModal();
+        });
+        document.getElementById('cancelBtn').addEventListener('click', () => {
+            this.hideCreateModal();
+        });
+
+        // Save button creates new todo list
         document.getElementById('saveBtn').addEventListener('click', () => {
             this.createTodoList();
         });
 
-        // Cancel button event
-        document.getElementById('cancelBtn').addEventListener('click', () => {
-            this.clearForm();
+        // Clicking outside modal hides it
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modalOverlay')) {
+                this.hideCreateModal();
+            }
         });
 
-        // Enter key navigation
+        // Enter key handling on inputs
         document.getElementById('personName').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 document.getElementById('todoListTitle').focus();
@@ -38,19 +53,25 @@ class TodoApp {
                 this.createTodoList();
             }
         });
-
-        // CREATE NEW button (placeholder for V2)
-        document.getElementById('createNewBtn').addEventListener('click', () => {
-            console.log('CREATE NEW clicked - Will be implemented in V2');
-            document.getElementById('personName').focus();
-        });
     }
 
-    // Todo List Operations
+    // Modal Management
+    showCreateModal() {
+        document.getElementById('modalOverlay').classList.add('active');
+        document.getElementById('personName').focus();
+    }
+
+    hideCreateModal() {
+        document.getElementById('modalOverlay').classList.remove('active');
+        document.getElementById('personName').value = '';
+        document.getElementById('todoListTitle').value = '';
+    }
+
+    // Create new todo list
     createTodoList() {
         const personName = document.getElementById('personName').value.trim();
         const tdlTitle = document.getElementById('todoListTitle').value.trim();
-        
+
         if (!personName || !tdlTitle) {
             alert('Please enter both name and TDL title');
             return;
@@ -61,22 +82,15 @@ class TodoApp {
         const newTodoList = {
             id: this.generateId(),
             name: combinedName,
-            tasks: [] // Empty tasks array for V1
+            tasks: []
         };
 
         this.todoLists.push(newTodoList);
         console.log('New todo list created:', newTodoList);
-        
-        this.render();
-        this.clearForm();
-        
-        this.showMessage(`${combinedName} todo list created successfully!`);
-    }
 
-    clearForm() {
-        document.getElementById('personName').value = '';
-        document.getElementById('todoListTitle').value = '';
-        document.getElementById('personName').focus();
+        this.render();
+        this.hideCreateModal();
+        this.showMessage(`"${combinedName}" created successfully!`);
     }
 
     showMessage(message) {
@@ -90,18 +104,37 @@ class TodoApp {
             color: white;
             padding: 1rem 2rem;
             border-radius: 8px;
-            z-index: 1000;
+            z-index: 1001;
             animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         `;
-        
+
+        if (!document.querySelector('#messageAnimation')) {
+            const style = document.createElement('style');
+            style.id = 'messageAnimation';
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
         document.body.appendChild(messageDiv);
-        
+
         setTimeout(() => {
             messageDiv.remove();
         }, 3000);
     }
 
-    // Rendering Methods
+    // Render todo lists or empty message
     render() {
         const todoGrid = document.getElementById('todoGrid');
         todoGrid.innerHTML = '';
@@ -109,13 +142,17 @@ class TodoApp {
         if (this.todoLists.length === 0) {
             todoGrid.innerHTML = `
                 <div style="
-                    grid-column: 1 / -1; 
+                    width: 100%; 
                     text-align: center; 
                     color: #666; 
                     font-size: 1.1rem;
-                    padding: 2rem;
+                    padding: 3rem;
+                    background: rgba(255, 255, 255, 0.9);
+                    border-radius: 15px;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
                 ">
-                    No todo lists yet. Create your first one using the form above!
+                    <h3 style="margin-bottom: 1rem; color: #333;">No todo lists yet!</h3>
+                    <p>Click the "CREATE NEW" button to create your first todo list.</p>
                 </div>
             `;
             return;
@@ -133,33 +170,10 @@ class TodoApp {
 
         card.innerHTML = `
             <h3>${todoList.name}</h3>
-            <p style="margin-top: 1rem; opacity: 0.9; font-size: 0.9rem;">
-                Todo list created successfully!<br>
-                <small>Tasks will be added in Version 3</small>
-            </p>
+            <p>Todo list ready!<br>
+            <small style="opacity: 0.8;">Tasks will be available in V3</small></p>
         `;
 
         return card;
     }
 }
-
-// Initialize the app when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    window.app = new TodoApp();
-
-    // Add CSS animation for messages
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-});
