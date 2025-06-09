@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDL - Version 1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <img src="assets/Screenshot_From_2025-06-01_07-36-21-removebg-preview.png" alt="Todo Logo" class="logo-image">
+            </div>
+            <button class="create-new-btn" id="createNewBtn">CREATE NEW</button>
+        </header>
+
+        <!-- Create New Form - Always Visible in V1 -->
+        <div class="create-form-container">
+            <div class="create-form">
+                <h2>CREATE NEW TDL</h2>
+                <div class="form-body">
+                    <label for="personName">NAME...</label>
+                    <input type="text" id="personName" placeholder="Enter your name...">
+                    <label for="todoListTitle">TDL TITLE...</label>
+                    <input type="text" id="todoListTitle" placeholder="Enter TDL title...">
+                    <div class="form-actions">
+                        <button class="cancel-btn" id="cancelBtn">CANCEL</button>
+                        <button class="save-btn" id="saveBtn">SAVE TO DO LIST</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Todo Lists Grid -->
+        <div class="todo-grid" id="todoGrid">
+            <!-- Todo cards will be dynamically generated here -->
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
