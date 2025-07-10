@@ -5,18 +5,16 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('assets/light_theme.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     background-attachment: fixed;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
+    color: #fff;
 }
 
-/* Overlay for better readability */
+/* Glassmorphism background with animated particles */
 body::before {
     content: '';
     position: fixed;
@@ -24,94 +22,174 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.8);
-    z-index: -1;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+    z-index: -2;
+    animation: float 15s ease-in-out infinite alternate;
 }
 
-/* Main Container */
+/* Floating particles animation */
+@keyframes float {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(-20px, 20px); }
+    100% { transform: translate(20px, -20px); }
+}
+
+/* Main Container with glass effect */
 .container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 3rem 2rem;
     position: relative;
     z-index: 1;
 }
 
-/* Header */
+/* Header with glowing effect */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .logo-section {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .logo-image {
-    height: 60px;
+    height: 70px;
     width: auto;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+    transform: rotate(10deg) scale(1.1);
 }
 
 .logo-text {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #333;
+    font-size: 3rem;
+    font-weight: 900;
     letter-spacing: 2px;
+    background: linear-gradient(135deg, #fff 0%, #e2e8f0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
+.logo-text::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
+}
+
+.logo-section:hover .logo-text::after {
+    transform: scaleX(1);
+}
+
+/* Neon button effect */
 .create-new-btn {
-    background: #fff;
+    background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
     border: none;
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 1rem;
+    padding: 1.2rem 3rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1.1rem;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.2),
+        0 0 0 2px rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #374151;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.create-new-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    transition: 0.5s;
+}
+
+.create-new-btn:hover::before {
+    left: 100%;
 }
 
 .create-new-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 2px rgba(255, 255, 255, 0.4);
 }
 
-/* Todo Grid */
+/* Todo Grid with 3D perspective */
 .todo-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    perspective: 1000px;
 }
 
-/* Todo Card */
+/* Todo Card with 3D hover effect */
 .todo-card {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
     padding: 0;
-    color: white;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
+    color: #374151;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.15),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    flex: 0 1 300px;
-    min-width: 280px;
     display: flex;
     flex-direction: column;
-    min-height: 350px;
+    min-height: 450px;
+    transform-style: preserve-3d;
+    will-change: transform;
 }
 
 .todo-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    transform: 
+        translateY(-15px) 
+        rotateX(5deg) 
+        rotateY(2deg) 
+        scale(1.03);
+    box-shadow: 
+        0 35px 70px rgba(0, 0, 0, 0.25),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .todo-card::before {
@@ -121,500 +199,885 @@ body::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    background: linear-gradient(135deg, rgba(120, 119, 198, 0.1) 0%, transparent 50%);
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
+.todo-card:hover::before {
+    opacity: 1;
+}
+
+/* Header with gradient shine */
 .todo-header {
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    padding: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.8rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0;
-    gap: 0.5rem;
+    gap: 1rem;
     position: relative;
     z-index: 2;
+    overflow: hidden;
+}
+
+.todo-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.2) 45%,
+        rgba(255, 255, 255, 0) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    animation: shine 4s infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) rotate(30deg); }
+    100% { transform: translateX(100%) rotate(30deg); }
 }
 
 .todo-title {
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     flex-grow: 1;
     text-align: center;
-    color: #333;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
 }
 
+/* Delete button with pulse effect */
 .delete-todo-btn {
     background: rgba(255, 255, 255, 0.2);
     border: none;
     color: white;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
     flex-shrink: 0;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
 }
 
 .delete-todo-btn:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Tasks Container */
+.delete-todo-btn::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    opacity: 0;
+}
+
+.delete-todo-btn:hover::before {
+    opacity: 1;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: scale(1.3); opacity: 0; }
+}
+
+/* Tasks Container with subtle pattern */
 .tasks-container {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
     margin-bottom: 1rem;
-    padding: 1.5rem;
+    padding: 2.5rem;
+    position: relative;
 }
 
+.tasks-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(103, 126, 234, 0.03) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(103, 126, 234, 0.03) 0%, transparent 20%);
+    pointer-events: none;
+}
+
+/* Task items with depth effect */
 .task-item {
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.85);
+    color: #374151;
+    padding: 1.2rem 1.5rem;
+    border-radius: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
-    gap: 0.5rem;
-    border: none;
+    gap: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
 }
 
 .task-item:hover {
-    background: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.task-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(to bottom, #667eea, #764ba2);
+    transition: width 0.3s ease;
+}
+
+.task-item:hover::before {
+    width: 8px;
 }
 
 .task-text {
     flex-grow: 1;
-    font-size: 0.9rem;
+    font-size: 1rem;
     word-break: break-word;
-    color: #333;
+    color: #374151;
+    font-weight: 600;
+    padding-left: 1rem;
 }
 
 .task-text.completed {
     text-decoration: line-through;
-    opacity: 0.7;
+    opacity: 0.6;
+    color: #6b7280;
 }
 
 .task-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem;
     flex-shrink: 0;
 }
 
+/* Task buttons with floating effect */
 .task-btn {
     background: #ef4444;
     border: none;
     color: white;
-    width: 25px;
-    height: 25px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(239, 68, 68, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.task-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(0);
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.task-btn:hover::before {
+    transform: scale(1);
 }
 
 .task-btn:hover {
     background: #dc2626;
-    transform: scale(1.1);
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 5px 15px rgba(239, 68, 68, 0.5);
 }
 
+/* View More button with arrow animation */
 .view-more-btn {
-    background: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
     border: none;
     color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0;
+    padding: 1.2rem 2rem;
+    border-radius: 0 0 25px 25px;
     cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 700;
     width: 100%;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
     margin-top: auto;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.view-more-btn::after {
+    content: '→';
+    transition: transform 0.3s ease;
 }
 
 .view-more-btn:hover {
-    background: rgba(0, 0, 0, 0.9);
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    transform: translateY(-3px);
+    letter-spacing: 2px;
 }
 
-/* Modal Styles */
+.view-more-btn:hover::after {
+    transform: translateX(5px);
+}
+
+/* Modal styles with glass effect */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(15px);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .modal {
-    background: white;
-    border-radius: 15px;
-    padding: 2rem;
-    max-width: 500px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    padding: 3rem;
+    max-width: 550px;
     width: 90%;
     position: relative;
-    animation: modalSlideIn 0.3s ease;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.task-modal {
-    background: white;
-    border-radius: 15px;
-    padding: 2rem;
-    max-width: 600px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    animation: modalSlideIn 0.3s ease;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.confirm-modal {
-    background: white;
-    border-radius: 15px;
-    padding: 2rem;
-    max-width: 400px;
-    width: 90%;
-    position: relative;
-    animation: modalSlideIn 0.3s ease;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    animation: modalSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
 }
 
 @keyframes modalSlideIn {
     from {
         opacity: 0;
-        transform: translateY(-50px) scale(0.9);
+        transform: translateY(-100px) rotateX(20deg) scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0) rotateX(0) scale(1);
     }
 }
 
-.modal-header, .task-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 1rem;
+/* New List Modal Specific Styles */
+.new-list-modal {
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(102, 126, 234, 0.5);
 }
 
-.modal-header h2, .task-modal-header h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
+.new-list-modal .modal-title {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
 }
 
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #666;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-.close-btn:hover {
-    color: #333;
-    background: #f5f5f5;
-}
-
-.modal-body label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #333;
+.new-list-modal .modal-input {
+    border: 2px solid rgba(102, 126, 234, 0.5);
+    padding: 1.3rem 1.8rem;
     font-size: 1.1rem;
+    margin-bottom: 1rem;
 }
 
-.modal-body input {
-    width: 100%;
-    padding: 1rem;
-    border: 2px solid #eee;
-    background: #f8f9fa;
-    border-radius: 8px;
-    font-size: 1rem;
-    margin-bottom: 2rem;
-    transition: all 0.3s ease;
+.new-list-modal .modal-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 5px 25px rgba(102, 126, 234, 0.3);
 }
 
-.modal-body input:focus {
-    outline: none;
-    border-color: #6366f1;
-    background: white;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+.new-list-modal .modal-buttons {
+    margin-top: 2rem;
 }
 
-.modal-actions, .task-modal-actions {
+.new-list-modal .modal-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+    padding: 1.2rem 3rem;
+}
+
+.new-list-modal .modal-btn-primary:hover {
+    background: linear-gradient(135deg, #5a6fd1 0%, #6740a1 100%);
+}
+
+/* New Task Modal Specific Styles */
+.new-task-modal {
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(118, 75, 162, 0.5);
+}
+
+.new-task-modal .modal-title {
+    background: linear-gradient(135deg, #764ba2 0%, #9f7aea 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.new-task-modal .modal-input {
+    border: 2px solid rgba(118, 75, 162, 0.5);
+    padding: 1.3rem 1.8rem;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.new-task-modal .modal-input:focus {
+    border-color: #764ba2;
+    box-shadow: 0 5px 25px rgba(118, 75, 162, 0.3);
+}
+
+.new-task-modal .modal-buttons {
+    margin-top: 2rem;
+}
+
+.new-task-modal .modal-btn-primary {
+    background: linear-gradient(135deg, #764ba2 0%, #9f7aea 100%);
+    box-shadow: 0 10px 30px rgba(118, 75, 162, 0.5);
+    padding: 1.2rem 3rem;
+}
+
+.new-task-modal .modal-btn-primary:hover {
+    background: linear-gradient(135deg, #6740a1 0%, #8b5cf6 100%);
+}
+
+/* Priority Selector Styles */
+.priority-selector {
     display: flex;
     gap: 1rem;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-    border-top: 1px solid #eee;
-    padding-top: 1rem;
+    margin: 1.5rem 0;
+    justify-content: center;
 }
 
-.cancel-btn, .save-btn, .add-task-btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
+.priority-option {
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     font-size: 0.9rem;
-}
-
-.cancel-btn {
-    background: #f8f9fa;
-    color: #666;
-    border: 2px solid #eee;
-}
-
-.cancel-btn:hover {
-    background: #e9ecef;
-    border-color: #ddd;
-}
-
-.save-btn, .add-task-btn {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: white;
     border: 2px solid transparent;
 }
 
-.save-btn:hover, .add-task-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+.priority-option:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Task Modal Specific Styles */
-.task-input-section {
+.priority-high {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.priority-high.selected {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4);
+}
+
+.priority-medium {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.priority-medium.selected {
+    background: #f59e0b;
+    color: white;
+    box-shadow: 0 5px 20px rgba(245, 158, 11, 0.4);
+}
+
+.priority-low {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.priority-low.selected {
+    background: #10b981;
+    color: white;
+    box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Modal Content Styling */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.modal-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #374151;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.modal-input {
+    padding: 1.2rem 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    color: #374151;
+}
+
+.modal-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.modal-input::placeholder {
+    color: #9ca3af;
+}
+
+/* Modal Buttons Container */
+.modal-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* Modal Button Styles */
+.modal-btn {
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
+
+.modal-btn-secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: #374151;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.modal-btn:hover {
+    transform: translateY(-3px);
+}
+
+.modal-btn-primary:hover {
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+}
+
+.modal-btn-secondary:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Add Task Form Styling */
+.add-task-form {
     display: flex;
     gap: 1rem;
-    margin-bottom: 2rem;
-    align-items: flex-end;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.task-input-section input {
+.task-input {
     flex-grow: 1;
-    margin-bottom: 0;
-}
-
-.task-list {
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 2rem;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    padding: 1rem;
-    background: #f8f9fa;
-}
-
-.task-list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background: white;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(102, 126, 234, 0.3);
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
     transition: all 0.3s ease;
-    border: 1px solid #eee;
+    color: #374151;
 }
 
-.task-list-item:hover {
-    border-color: #6366f1;
-    transform: translateX(5px);
+.task-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    background: rgba(255, 255, 255, 0.95);
 }
 
-.task-list-item.completed {
-    opacity: 0.7;
-    background: #f1f3f4;
-}
-
-.task-list-item.completed .task-text {
-    text-decoration: line-through;
-}
-
-.task-list-item .task-text {
-    flex-grow: 1;
-    color: #333;
-    font-size: 0.95rem;
-}
-
-.task-list-item .task-actions {
+.add-task-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 0 2rem;
+    border-radius: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 0.5rem;
 }
 
-.task-list-item .task-btn {
-    background: #f8f9fa;
-    color: #666;
-    border: 1px solid #eee;
-    width: 30px;
-    height: 30px;
-    font-size: 0.9rem;
+.add-task-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
-.task-list-item .task-btn:hover {
-    background: #6366f1;
+.add-task-btn::before {
+    content: '+';
+    font-size: 1.5rem;
+}
+
+/* Checkbox Styling */
+.task-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    border: 2px solid #667eea;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.task-checkbox:checked {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+}
+
+.task-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
     color: white;
-    border-color: #6366f1;
+    font-size: 0.9rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.task-list-item .task-btn.complete-btn:hover {
-    background: #10b981;
-    border-color: #10b981;
-}
-
-.task-list-item .task-btn.delete-btn:hover {
-    background: #ef4444;
-    border-color: #ef4444;
-}
-
-/* Confirmation Modal */
-.confirm-modal-body {
-    text-align: center;
-    padding: 1rem 0;
-}
-
-.confirm-modal-body p {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 2rem;
-}
-
-.confirm-actions {
+/* Close Button for Modal */
+.close-modal-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(102, 126, 234, 0.2);
     display: flex;
-    gap: 1rem;
+    align-items: center;
     justify-content: center;
-}
-
-.confirm-cancel-btn, .confirm-ok-btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    color: #374151;
+    font-size: 1.2rem;
 }
 
-.confirm-cancel-btn {
-    background: #f8f9fa;
-    color: #666;
-    border: 2px solid #eee;
-}
-
-.confirm-cancel-btn:hover {
-    background: #e9ecef;
-}
-
-.confirm-ok-btn {
+.close-modal-btn:hover {
     background: #ef4444;
     color: white;
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 5px 20px rgba(239, 68, 68, 0.3);
 }
 
-.confirm-ok-btn:hover {
-    background: #dc2626;
-    transform: translateY(-2px);
+/* Error Message Styling */
+.error-message {
+    color: #ef4444;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    animation: shake 0.5s ease;
 }
 
-/* Responsive Design */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+/* Empty State Styling */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #6b7280;
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+    margin: 2rem 0;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+    color: #667eea;
+}
+
+/* Priority indicator */
+.priority-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.priority-high {
+    background: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
+.priority-medium {
+    background: #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.priority-low {
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+/* Date styling */
+.task-date {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
     .container {
-        padding: 1rem;
+        padding: 2rem 1.5rem;
     }
     
     .header {
         flex-direction: column;
         text-align: center;
-        gap: 1.5rem;
+        gap: 2rem;
+        padding: 2rem;
     }
     
     .logo-text {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     
-    .todo-grid {
+    .create-new-btn {
+        width: 100%;
         justify-content: center;
     }
     
-    .todo-card {
-        flex: 1 1 100%;
-        max-width: 400px;
+    .todo-grid {
+        grid-template-columns: 1fr;
     }
     
-    .task-input-section {
+    .modal {
+        padding: 2rem 1.5rem;
+    }
+    
+    .modal-buttons {
         flex-direction: column;
         gap: 1rem;
     }
     
-    .modal-actions, .task-modal-actions, .confirm-actions {
-        flex-direction: column;
+    .modal-btn {
+        width: 100%;
     }
-    
-    .modal, .task-modal, .confirm-modal {
-        width: 95%;
-        margin: 1rem;
+
+    .priority-selector {
+        flex-direction: column;
+        align-items: center;
     }
 }
 
 @media (max-width: 480px) {
     .logo-text {
-        font-size: 1.5rem;
-    }
-    
-    .create-new-btn {
-        padding: 0.75rem 1.5rem;
-        font-size: 0.9rem;
+        font-size: 2rem;
     }
     
     .todo-card {
-        min-height: 300px;
+        min-height: 400px;
     }
     
-    .task-item {
-        padding: 0.5rem 0.75rem;
+    .tasks-container {
+        padding: 1.5rem;
     }
     
-    .task-text {
-        font-size: 0.85rem;
+    .add-task-form {
+        flex-direction: column;
+    }
+    
+    .add-task-btn {
+        padding: 1rem;
     }
 }
 
-/* Strike-through for completed tasks in task modal */
-.task-list-item.completed .task-text {
-    text-decoration: line-through;
-    color: gray;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(#667eea, #764ba2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(#5a6fd1, #6740a1);
+}
+
+/* Floating action button */
+.fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.fab:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.7);
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #667eea;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Confetti effect */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: #f00;
+    opacity: 0;
+    z-index: 1000;
+    animation: confettiFall 5s ease-in-out;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
 }
